@@ -1,5 +1,5 @@
 package com.jackpickus.Deck;
 
-public class Deck {
+public class Deck implements DeckInterface {
     
 }
