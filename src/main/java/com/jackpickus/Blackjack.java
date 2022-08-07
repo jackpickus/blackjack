@@ -75,8 +75,6 @@ public class Blackjack {
                 System.out.println("Total: " + player + "\n");
             }
 
-            System.out.println("Total: " + player + "\n");
-
             System.out.println("Dealer is showing: " + dealerUpCard + "\n");
 
             if (playerBlackjack) {
