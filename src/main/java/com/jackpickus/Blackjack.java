@@ -7,27 +7,27 @@ import com.jackpickus.Deck.Deck;
 
 public class Blackjack {
 
-    public static void main( String[] args ) {
+    public static void main(String[] args) {
         Blackjack blackjack = new Blackjack();
         blackjack.playGame();
     }
 
     void playGame() {
 
-         System.out.println("Welcome to Blackjack! Starting amount is $1000. Minimum bet $5");
+        System.out.println("Welcome to Blackjack! Starting amount is $1000. Minimum bet $5");
         System.out.println("Blackjack pays 3 to 2. Insurance pays 2 to 1");
         System.out.println("Dealer hits on soft 17\n");
 
         Deck theDeck = makeDeck();
 
         int deckFullAmount = theDeck.cardsLeft();
-        
+
         // TODO not sure if this boolean is needed
         // boolean playing = true;
 
         theDeck.shuffle();
         double money = 1000;
-        Scanner myScanner = new Scanner(System.in);  // Create a Scanner object
+        Scanner myScanner = new Scanner(System.in); // Create a Scanner object
 
         while (money > 0) {
             int player = 0;
@@ -42,11 +42,10 @@ public class Blackjack {
 
             System.out.println("\nYou have $" + money + " left to bet\n");
             System.out.print("Enter bet amount: ");
-            String input = myScanner.nextLine();  // Read user input
+            String input = myScanner.nextLine(); // Read user input
             if (input.equals("q") || input.equals("quit")) {
                 break;
             }
-
 
             while (!isValidInput(input, money)) {
                 input = myScanner.nextLine();
@@ -118,17 +117,18 @@ public class Blackjack {
                 } else if (decision.equals("dd")) {
                     money -= bet;
                     bet += bet;
-                    Card doubleDownCard = theDeck.dealCard(); 
+                    Card doubleDownCard = theDeck.dealCard();
                     player += doubleDownCard.getValue();
 
-                    if (playerHasOneAce) tempPlayerAceTotal += doubleDownCard.getValue();
+                    if (playerHasOneAce)
+                        tempPlayerAceTotal += doubleDownCard.getValue();
 
                     System.out.println("Card dealt is " + doubleDownCard);
                     System.out.println("Total: " + player + "\n");
                     break;
                 } else if (decision.equals("spl")) {
                     // TODO implement split
-                } else { 
+                } else {
                     playerMove = false;
                 }
 
@@ -147,39 +147,38 @@ public class Blackjack {
             // if player double downs, then break out of loop without
             // setting playerMove to false so we must check to see if
             // player busted after doubling down
-            if (playerMove) playerBusted = busted(player);
+            if (playerMove)
+                playerBusted = busted(player);
 
-           if (playerBusted) {
-            continue;
-           } 
-            
-           System.out.println("\nDealer has " + dealerDownCard + " for their down card");
-           System.out.println("Dealer cards: " + dealerUpCard + " and " + dealerDownCard);
-           System.out.println("Dealer total is " + dealer);
+            if (playerBusted) {
+                continue;
+            }
 
-           while (dealer < 17) {
-            Card dealerNextCard = theDeck.dealCard();
-            dealer += dealerNextCard.getValue();
-            System.out.println("\nDealer gets " + dealerNextCard);
-            System.out.println("Dealer now has a total of " + dealer);
-           }
-           if (dealer > 21) {
-            System.out.println("Dealer busted!");
-            money += bet * 2;
-            continue;
-           }
+            System.out.println("\nDealer has " + dealerDownCard + " for their down card");
+            System.out.println("Dealer cards: " + dealerUpCard + " and " + dealerDownCard);
+            System.out.println("Dealer total is " + dealer);
+
+            while (dealer < 17) {
+                Card dealerNextCard = theDeck.dealCard();
+                dealer += dealerNextCard.getValue();
+                System.out.println("\nDealer gets " + dealerNextCard);
+                System.out.println("Dealer now has a total of " + dealer);
+            }
+            if (dealer > 21) {
+                System.out.println("Dealer busted!");
+                money += bet * 2;
+                continue;
+            }
 
             if (dealer == player) {
                 System.out.println("\nPush");
                 money += bet;
-            }
-            else if (dealer > player) {
+            } else if (dealer > player) {
                 System.out.println("\nDealer wins :(");
             } else {
                 System.out.println("\nPlayer wins $" + bet);
                 money += bet * 2;
             }
-
 
         }
 
@@ -226,7 +225,7 @@ public class Blackjack {
     private boolean busted(int total) {
         if (total > 21) {
             System.out.println("Busted!");
-            return true; 
+            return true;
         }
         return false;
     }
@@ -235,5 +234,4 @@ public class Blackjack {
         return new Deck();
     }
 
-    
 }
