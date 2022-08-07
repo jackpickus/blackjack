@@ -240,6 +240,14 @@ public class Blackjack {
     }
 
     private boolean offerInsurance() {
+        System.out.println("Would you like to buy insurance? (y/n)");
+        System.out.println("> ");
+        Scanner insuranceScanner = new Scanner(System.in);
+        String insuranceInput = insuranceScanner.nextLine(); // Read user input
+        insuranceScanner.close();
+
+        if (insuranceInput.equals("y") || insuranceInput.equals("Y") ) return true;
+
         return false;
     }
 
