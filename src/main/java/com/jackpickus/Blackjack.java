@@ -22,9 +22,6 @@ public class Blackjack {
 
         int deckFullAmount = theDeck.cardsLeft();
 
-        // TODO not sure if this boolean is needed
-        // boolean playing = true;
-
         theDeck.shuffle();
         double money = 1000;
         Scanner myScanner = new Scanner(System.in); // Create a Scanner object
