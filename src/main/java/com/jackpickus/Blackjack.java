@@ -123,8 +123,9 @@ public class Blackjack {
                     System.out.println("Card dealt is " + doubleDownCard);
                     System.out.println("Total: " + player + "\n");
                     break;
-                } else if (decision.equals("spl")) {
+                } else if (decision.equals("spl") && playerCard1.getValue() == playerCard2.getValue()) {
                     // TODO implement split
+                    System.out.println("SPLIT!");
                 } else {
                     playerMove = false;
                 }
