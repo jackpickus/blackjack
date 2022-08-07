@@ -86,6 +86,8 @@ public class Blackjack {
             if (paidInsurance) {
                 insuranceBet = bet / 2;
                 money -= insuranceBet;
+                System.out.println("Insurance bet: " + insuranceBet);
+                System.out.println("Money left: " + money + "\n");
             }
 
             if (playerBlackjack) {
