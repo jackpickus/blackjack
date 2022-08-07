@@ -64,10 +64,15 @@ public class Blackjack {
 
             System.out.println("Player cards: " + playerCard1 + " and " + playerCard2);
             boolean playerHasOneAce = hasOneAce(playerCard1, playerCard2);
+            boolean dealerHasOneAce = hasOneAce(dealerUpCard, dealerDownCard);
 
+            int tempDealerAceTotal = dealer;
             int tempPlayerAceTotal = 0;
             if (playerHasOneAce) {
                 tempPlayerAceTotal = player + 10; // add 10 because the 1 from Ace is already accounted for
+                System.out.println("Total: " + tempPlayerAceTotal + "\n");
+            } else {
+                System.out.println("Total: " + player + "\n");
             }
 
             System.out.println("Total: " + player + "\n");
@@ -98,7 +103,7 @@ public class Blackjack {
                     System.out.println("Card dealt is " + nextCard);
                     player += nextCard.getValue();
 
-                    if (nextCard.getName().equals("Ace")) {
+                    if (nextCard.getName().equals("Ace") && !playerHasOneAce) {
                         playerHasOneAce = true;
                         tempPlayerAceTotal = player + 10;
                     } else {
@@ -154,14 +159,52 @@ public class Blackjack {
 
             System.out.println("\nDealer has " + dealerDownCard + " for their down card");
             System.out.println("Dealer cards: " + dealerUpCard + " and " + dealerDownCard);
-            System.out.println("Dealer total is " + dealer);
 
+            if (dealerHasOneAce) {
+                tempDealerAceTotal = dealer + 10;
+                System.out.println("Dealer total is " + tempDealerAceTotal);
+            } else {
+                System.out.println("Dealer total is " + dealer);
+            }
+
+            boolean softSeventeen = false;
+            if (tempDealerAceTotal == 17 && dealerHasOneAce) softSeventeen = true; 
+
+            boolean firstCycle = true;
             while (dealer < 17) {
+
+                // dealer has an ace, not soft 17, and total is greater than or equal to 17
+                if (tempDealerAceTotal >= 17 && dealerHasOneAce && tempDealerAceTotal <= 21) {
+                    if (!softSeventeen) break;
+                    else if (!firstCycle) break;
+                }
+
                 Card dealerNextCard = theDeck.dealCard();
                 dealer += dealerNextCard.getValue();
+                tempDealerAceTotal += dealerNextCard.getValue();
                 System.out.println("\nDealer gets " + dealerNextCard);
-                System.out.println("Dealer now has a total of " + dealer);
+
+                if (!dealerHasOneAce && dealerNextCard.getName().equals("Ace")) {
+                    dealerHasOneAce = true;
+                    tempDealerAceTotal += 10;
+                }
+
+                if (dealerHasOneAce && tempDealerAceTotal < 22) {
+                    System.out.println("Dealer total: " + tempDealerAceTotal + "\n");
+                } else {
+                    System.out.println("Dealer total: " + dealer + "\n");
+                }
+
+                if (firstCycle) firstCycle = false;
+                
             }
+
+           if (dealerHasOneAce) {
+                if (tempDealerAceTotal > dealer && tempDealerAceTotal <= 21) {
+                    dealer = tempDealerAceTotal;
+                }
+            } 
+
             if (dealer > 21) {
                 System.out.println("Dealer busted!");
                 money += bet * 2;
