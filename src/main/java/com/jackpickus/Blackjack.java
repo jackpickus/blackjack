@@ -86,7 +86,7 @@ public class Blackjack {
                 if (insuranceInput.equals("y") || insuranceInput.equals("Y") ) paidInsurance = true;
             }
 
-            int insuranceBet = 0;
+            double insuranceBet = 0.0;
             if (paidInsurance) {
                 insuranceBet = bet / 2;
                 money -= insuranceBet;
