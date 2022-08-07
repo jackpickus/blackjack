@@ -224,6 +224,10 @@ public class Blackjack {
         myScanner.close();
     }
 
+    private boolean offerInsurance() {
+        return false;
+    }
+
     // Only want to check if player has 1 ace
     // if they have two that will be handled by split
     private boolean hasOneAce(Card playerCard1, Card playerCard2) {
