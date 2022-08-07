@@ -82,6 +82,17 @@ public class Blackjack {
 
             System.out.println("Dealer is showing: " + dealerUpCard + "\n");
 
+            boolean paidInsurance = false;
+            if (dealerUpCard.getName().equals("Ace")) {
+                paidInsurance = offerInsurance();
+            }
+
+            int insuranceBet = 0;
+            if (paidInsurance) {
+                insuranceBet = bet / 2;
+                money -= insuranceBet;
+            }
+
             if (playerBlackjack) {
                 money += bet * 2.5;
                 System.out.println("BLACKJACK! Win $" + bet * 1.5);
