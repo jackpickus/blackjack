@@ -147,7 +147,8 @@ public class Blackjack {
                     System.out.println("Card dealt is " + doubleDownCard);
                     System.out.println("Total: " + player + "\n");
                     break;
-                } else if (decision.equals("spl") && playerCard1.getValue() == playerCard2.getValue()) {
+                } else if (decision.equals("spl") && playerCard1.getName().equals(playerCard2.getName())) {
+                    // player can only split if cards are the same rank ie Jack and Jack
                     // TODO implement split
                     System.out.println("SPLIT!");
                 } else {
