@@ -79,7 +79,11 @@ public class Blackjack {
 
             boolean paidInsurance = false;
             if (dealerUpCard.getName().equals("Ace")) {
-                paidInsurance = offerInsurance();
+                System.out.println("Would you like to buy insurance? (y/n)");
+                System.out.print("> ");
+                String insuranceInput = myScanner.nextLine(); // Read user input
+
+                if (insuranceInput.equals("y") || insuranceInput.equals("Y") ) paidInsurance = true;
             }
 
             int insuranceBet = 0;
