@@ -56,11 +56,6 @@ public class Blackjack {
             Card playerCard2 = theDeck.dealCard();
             Card dealerDownCard = theDeck.dealCard();
 
-            boolean paidInsurance = false;
-            if (dealerUpCard.getName().equals("Ace")) {
-                paidInsurance= offerInsurance();
-            }
-
             boolean playerBlackjack = hasBlackJack(playerCard1, playerCard2);
             boolean dealerBlackjack = hasBlackJack(dealerUpCard, dealerDownCard);
 
