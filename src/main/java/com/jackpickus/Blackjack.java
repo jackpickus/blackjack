@@ -88,7 +88,7 @@ public class Blackjack {
 
             double insuranceBet = 0.0;
             if (paidInsurance) {
-                insuranceBet = bet / 2;
+                insuranceBet = bet / 2.0;
                 money -= insuranceBet;
                 System.out.println("Insurance bet: " + insuranceBet);
                 System.out.println("Money left: " + money + "\n");
@@ -102,7 +102,7 @@ public class Blackjack {
             if (dealerBlackjack) {
                 System.out.println("Dealer has Blackjack. Tough luck");
                 if (paidInsurance) {
-                    money += (insuranceBet * 2) + insuranceBet;
+                    money += (insuranceBet * 2.0) + insuranceBet;
                     System.out.println("Insurnace paid " + bet);
                 }
                 continue;
