@@ -190,13 +190,15 @@ public class Blackjack {
             boolean softSeventeen = false;
             if (tempDealerAceTotal == 17 && dealerHasOneAce) softSeventeen = true; 
 
-            boolean firstCycle = true;
+            boolean firstCycle = true; // used for when dealer has soft 17 to ensure they hit at least once
             while (dealer < 17) {
 
-                // dealer has an ace, not soft 17, and total is greater than or equal to 17
+                // dealer has an ace and total is greater than or equal to 17
                 if (tempDealerAceTotal >= 17 && dealerHasOneAce && tempDealerAceTotal <= 21) {
                     if (!softSeventeen) break;
-                    else if (!firstCycle) break;
+
+                    // dealer has soft 17 but has received at least three cards to make total at least >= 17 
+                    else if (!firstCycle) break; 
                 }
 
                 Card dealerNextCard = theDeck.dealCard();
@@ -215,6 +217,7 @@ public class Blackjack {
                     System.out.println("Dealer total: " + dealer + "\n");
                 }
 
+                // dealer has now received at least 3 cards now
                 if (firstCycle) firstCycle = false;
                 
             }
