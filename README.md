@@ -7,4 +7,4 @@ Blackjack pays 3 to 2
 
 Insurance pays 2 to 1
 
-5 card shoe, can change size in Deck class
+5 deck shoe, can change size in Deck class
