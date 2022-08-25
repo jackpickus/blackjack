@@ -159,7 +159,7 @@ public class Blackjack {
                     playerMove = false;
                 }
 
-                playerBusted = busted(player);
+                playerBusted = playerHand.busted();
                 if (playerBusted) {
                     playerMove = false;
                 }
@@ -175,7 +175,7 @@ public class Blackjack {
             // setting playerMove to false so we must check to see if
             // player busted after doubling down
             if (playerMove)
-                playerBusted = busted(player);
+                playerBusted = playerHand.busted();
 
             if (playerBusted) {
                 continue;
