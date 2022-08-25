@@ -49,12 +49,17 @@ public class Hand implements HandInterface{
 
     @Override
     public boolean busted() {
-        int handTotal = ((Hand) this.hand).getHandTotal();
+        int handTotal = getHandTotal();
         if (handTotal > 21) {
             System.out.println("Busted!");
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void addCard(Card card) {
+        this.hand.add(card);
     }
 
 }
