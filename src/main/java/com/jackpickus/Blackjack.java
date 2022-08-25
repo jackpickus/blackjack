@@ -67,8 +67,8 @@ public class Blackjack {
             dealer += dealerHand.getHandTotal();
 
             System.out.println("Player cards: " + playerCard1 + " and " + playerCard2);
-            boolean playerHasOneAce = hasOneAce(playerCard1, playerCard2);
-            boolean dealerHasOneAce = hasOneAce(dealerUpCard, dealerDownCard);
+            boolean playerHasOneAce = playerHand.hasOneAce();
+            boolean dealerHasOneAce = dealerHand.hasOneAce();
 
             int tempDealerAceTotal = dealer;
             int tempPlayerAceTotal = 0;
