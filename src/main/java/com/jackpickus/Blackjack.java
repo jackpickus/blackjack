@@ -272,14 +272,6 @@ public class Blackjack {
 
     }
 
-    private boolean busted(int total) {
-        if (total > 21) {
-            System.out.println("Busted!");
-            return true;
-        }
-        return false;
-    }
-
     private Deck makeDeck() {
         return new Deck();
     }
