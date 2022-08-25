@@ -1,5 +1,7 @@
 package com.jackpickus.Hand;
 
+import com.jackpickus.Card.Card;
+
 public interface HandInterface {
     
     int getHandTotal();
@@ -11,5 +13,7 @@ public interface HandInterface {
     boolean hasOneAce();
 
     boolean busted();
+
+    void addCard(Card card);
 
 }
