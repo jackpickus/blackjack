@@ -38,8 +38,13 @@ public class Hand implements HandInterface{
 
     @Override
     public boolean hasOneAce() {
-        // TODO Auto-generated method stub
-        return false;
+        if (this.hand.get(0).getName().equals("Ace")) {
+            return true;
+        } else if (this.hand.get(1).getName().equals("Ace")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
