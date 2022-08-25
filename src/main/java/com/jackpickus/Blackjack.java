@@ -266,11 +266,6 @@ public class Blackjack {
 
     }
 
-    private boolean hasBlackJack(Card card1, Card card2) {
-        return (card1.getName().equals("Ace") || card2.getName().equals("Ace")) &&
-                (card1.getValue() == 10 || card2.getValue() == 10);
-    }
-
     private boolean isValidInput(String input, double money) {
         boolean isNumber = input != null && input.matches("\\d+");
 
