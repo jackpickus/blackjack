@@ -31,8 +31,9 @@ public class Hand implements HandInterface{
 
     @Override
     public boolean hasBlackJack() {
-        // TODO Auto-generated method stub
-        return false;
+
+        return (this.hand.get(0).getName().equals("Ace") || this.hand.get(1).getName().equals("Ace")) &&
+                (this.hand.get(0).getValue() == 10 || this.hand.get(1).getValue() == 10);
     }
 
     @Override
