@@ -43,7 +43,11 @@ public class Hand implements HandInterface{
 
     @Override
     public boolean busted() {
-        // TODO Auto-generated method stub
+        int handTotal = ((Hand) this.hand).getHandTotal();
+        if (handTotal > 21) {
+            System.out.println("Busted!");
+            return true;
+        }
         return false;
     }
 
