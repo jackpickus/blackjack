@@ -60,8 +60,8 @@ public class Blackjack {
             Hand playerHand = new Hand(playerCard1, playerCard2);
             Hand dealerHand = new Hand(dealerUpCard, dealerDownCard);
 
-            boolean playerBlackjack = hasBlackJack(playerCard1, playerCard2);
-            boolean dealerBlackjack = hasBlackJack(dealerUpCard, dealerDownCard);
+            boolean playerBlackjack = playerHand.hasBlackJack();
+            boolean dealerBlackjack = dealerHand.hasBlackJack();
 
             player += playerCard1.getValue() + playerCard2.getValue();
             dealer += dealerUpCard.getValue() + dealerDownCard.getValue();
