@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.jackpickus.Card.Card;
 import com.jackpickus.Deck.Deck;
+import com.jackpickus.Hand.Hand;
 
 public class Blackjack {
 
@@ -55,6 +56,9 @@ public class Blackjack {
             Card dealerUpCard = theDeck.dealCard();
             Card playerCard2 = theDeck.dealCard();
             Card dealerDownCard = theDeck.dealCard();
+
+            Hand playerHand = new Hand(playerCard1, playerCard2);
+            Hand dealerHand = new Hand(dealerUpCard, dealerDownCard);
 
             boolean playerBlackjack = hasBlackJack(playerCard1, playerCard2);
             boolean dealerBlackjack = hasBlackJack(dealerUpCard, dealerDownCard);
