@@ -253,19 +253,6 @@ public class Blackjack {
         myScanner.close();
     }
 
-    // Only want to check if player has 1 ace
-    // if they have two that will be handled by split
-    private boolean hasOneAce(Card playerCard1, Card playerCard2) {
-        if (playerCard1.getName().equals("Ace")) {
-            return true;
-        } else if (playerCard2.getName().equals("Ace")) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-
     private boolean isValidInput(String input, double money) {
         boolean isNumber = input != null && input.matches("\\d+");
 
