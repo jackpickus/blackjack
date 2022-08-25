@@ -126,6 +126,8 @@ public class Blackjack {
                     System.out.println("Card dealt is " + nextCard);
                     player += nextCard.getValue();
 
+                    playerHand.addCard(nextCard);
+
                     if (nextCard.getName().equals("Ace") && !playerHasOneAce) {
                         playerHasOneAce = true;
                         tempPlayerAceTotal = player + 10;
