@@ -4,7 +4,7 @@ public interface HandInterface {
     
     int getHandTotal();
 
-    void removeCard();
+    void removeCard(int i);
 
     boolean hasBlackJack();
 
