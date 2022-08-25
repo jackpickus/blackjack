@@ -25,9 +25,8 @@ public class Hand implements HandInterface{
     }
 
     @Override
-    public void removeCard() {
-        // TODO Auto-generated method stub
-        
+    public void removeCard(int index) {
+        this.hand.remove(index);
     }
 
     @Override
