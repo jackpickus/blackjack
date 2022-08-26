@@ -193,8 +193,7 @@ public class Blackjack {
                 System.out.println("Dealer total is " + dealer);
             }
 
-            boolean softSeventeen = false;
-            if (tempDealerAceTotal == 17 && dealerHasOneAce) softSeventeen = true; 
+            boolean softSeventeen = tempDealerAceTotal == 17 && dealerHasOneAce;
 
             boolean firstCycle = true; // used for when dealer has soft 17 to ensure they hit at least once
             while (dealer < 17) {
