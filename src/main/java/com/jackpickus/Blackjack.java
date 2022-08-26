@@ -107,7 +107,7 @@ public class Blackjack {
                 System.out.println("Dealer has Blackjack. Tough luck");
                 if (paidInsurance) {
                     money += (insuranceBet * 2.0) + insuranceBet;
-                    System.out.println("Insurnace paid " + bet);
+                    System.out.println("Insurance paid " + bet);
                 }
                 continue;
             }
