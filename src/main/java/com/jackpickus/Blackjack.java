@@ -115,12 +115,11 @@ public class Blackjack {
             System.out.println("Enter 'h' to hit and 's' to stand");
             System.out.println("Enter 'dd' to double down and 'spl' to split");
 
-            boolean playerMove = true;
+            String decision = "";
             boolean playerBusted = false;
-
-            while (playerMove) {
+            while (!playerBusted) {
                 System.out.print("> ");
-                String decision = myScanner.nextLine();
+                decision = myScanner.nextLine();
                 if (decision.equals("h")) {
                     Card nextCard = theDeck.dealCard();
                     System.out.println("Card dealt is " + nextCard);
@@ -158,13 +157,9 @@ public class Blackjack {
                     // TODO implement split
                     System.out.println("SPLIT!");
                 } else {
-                    playerMove = false;
+                    break;
                 }
-
                 playerBusted = playerHand.busted();
-                if (playerBusted) {
-                    playerMove = false;
-                }
             }
 
             if (playerHasOneAce) {
@@ -172,12 +167,6 @@ public class Blackjack {
                     player = tempPlayerAceTotal;
                 }
             }
-
-            // if player double downs, then break out of loop without
-            // setting playerMove to false so we must check to see if
-            // player busted after doubling down
-            if (playerMove)
-                playerBusted = playerHand.busted();
 
             if (playerBusted) {
                 continue;
