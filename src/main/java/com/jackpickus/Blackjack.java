@@ -1,6 +1,9 @@
 package com.jackpickus;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 import com.jackpickus.Card.Card;
 import com.jackpickus.Deck.Deck;
@@ -28,7 +31,6 @@ public class Blackjack {
         Scanner myScanner = new Scanner(System.in); // Create a Scanner object
 
         while (money > 0) {
-            int player = 0;
             int dealer = 0;
             int bet;
 
@@ -63,21 +65,15 @@ public class Blackjack {
             boolean playerBlackjack = playerHand.hasBlackJack();
             boolean dealerBlackjack = dealerHand.hasBlackJack();
 
-            player += playerHand.getHandTotal();
             dealer += dealerHand.getHandTotal();
 
-            System.out.println("Player cards: " + playerCard1 + " and " + playerCard2);
+            System.out.println(playerHand.toString());
             boolean playerHasOneAce = playerHand.hasOneAce();
             boolean dealerHasOneAce = dealerHand.hasOneAce();
 
             int tempDealerAceTotal = dealer;
             int tempPlayerAceTotal = 0;
-            if (playerHasOneAce) {
-                tempPlayerAceTotal = player + 10; // add 10 because the 1 from Ace is already accounted for
-                System.out.println("Total: " + tempPlayerAceTotal + "\n");
-            } else {
-                System.out.println("Total: " + player + "\n");
-            }
+
 
             System.out.println("Dealer is showing: " + dealerUpCard + "\n");
 
@@ -115,60 +111,95 @@ public class Blackjack {
             System.out.println("Enter 'h' to hit and 's' to stand");
             System.out.println("Enter 'dd' to double down and 'spl' to split");
 
+            Queue<Hand> handQueue = new LinkedList<>();
+            Stack<Hand> handStack = new Stack<>();
+            int numHands = 1; // init to 1 because player will always have 1 hand
+            handQueue.add(playerHand);
+
             String decision = "";
             boolean playerBusted = false;
-            while (!playerBusted) {
+            boolean playerContinuesHand;
+            while (!handQueue.isEmpty()) {
+                Hand temp = handQueue.remove();
+                System.out.println(temp.toString());
+                playerContinuesHand = false;
+
                 System.out.print("> ");
                 decision = myScanner.nextLine();
                 if (decision.equals("h")) {
                     Card nextCard = theDeck.dealCard();
                     System.out.println("Card dealt is " + nextCard);
-                    player += nextCard.getValue();
 
-                    playerHand.addCard(nextCard);
+                    temp.addCard(nextCard);
 
-                    if (nextCard.getName().equals("Ace") && !playerHasOneAce) {
-                        playerHasOneAce = true;
-                        tempPlayerAceTotal = player + 10;
+
+
+                    if (temp.hasOneAce() && temp.getHandAceTotal() < 22) {
+                        System.out.println("Total: " + temp.getHandAceTotal() + "\n");
                     } else {
-                        tempPlayerAceTotal += nextCard.getValue();
+                        System.out.println("Total: " + temp.getHandTotal() + "\n");
                     }
-
-                    if (playerHasOneAce && tempPlayerAceTotal < 22) {
-                        System.out.println("Total: " + tempPlayerAceTotal + "\n");
-                    } else {
-                        System.out.println("Total: " + player + "\n");
-                    }
+                    handQueue.add(temp);
+                    playerContinuesHand = true;
 
                 } else if (decision.equals("dd")) {
                     money -= bet;
                     bet += bet;
                     Card doubleDownCard = theDeck.dealCard();
-                    player += doubleDownCard.getValue();
+                    temp.addCard(doubleDownCard);
 
-                    if (playerHasOneAce)
-                        tempPlayerAceTotal += doubleDownCard.getValue();
+//                    if (playerHasOneAce) tempPlayerAceTotal += doubleDownCard.getValue();
 
                     System.out.println("Card dealt is " + doubleDownCard);
-                    System.out.println("Total: " + player + "\n");
-                    break;
+
                 } else if (decision.equals("spl") && playerCard1.getName().equals(playerCard2.getName())) {
                     // player can only split if cards are the same rank ie Jack and Jack
-                    // TODO implement split
                     System.out.println("SPLIT!");
-                } else {
+                    numHands++; // player now has at least two hands
+                    Card newCard1 = theDeck.dealCard();
+                    Card newCard2 = theDeck.dealCard();
+
+                    money -= bet;
+
+                    temp.removeCard(1);
+                    temp.addCard(newCard1);
+
+                    Hand playerHand2 = new Hand(playerCard2, newCard2);
+
+                    handQueue.add(temp);
+                    handQueue.add(playerHand2);
+
+                    int playerHandTotal2 = playerHand2.getHandTotal();
+
+                    System.out.println("Hand 1: " + temp);
+                    System.out.println("Hand 1 Total: " + temp.getHandTotal() + "\n");
+                    System.out.println("Hand 2: " + playerHand2);
+                    System.out.println("Hand 2 Total: " + playerHandTotal2 + "\n");
+
+                    playerContinuesHand = true;
+
+                }
+                if (!playerContinuesHand) {
+                    handStack.add(temp);
+                }
+
+                System.out.println("The hand total: " + temp.getHandTotal());
+                playerBusted = temp.busted();
+                if (playerBusted) {
+                    temp.setBusted(true);
                     break;
                 }
-                playerBusted = playerHand.busted();
+
             }
 
-            if (playerHasOneAce) {
-                if (tempPlayerAceTotal > player && tempPlayerAceTotal <= 21) {
-                    player = tempPlayerAceTotal;
-                }
-            }
+            // LOOK AT THIS FOR HOW MULTIPLE HANDS WILL HANDLE THIS
+//            if (playerHasOneAce) {
+//                if (tempPlayerAceTotal > player && tempPlayerAceTotal <= 21) {
+//                    player = tempPlayerAceTotal;
+//                }
+//            }
 
-            if (playerBusted) {
+            if (playerBusted && numHands <= 1) {
                 continue;
             }
 
@@ -224,18 +255,34 @@ public class Blackjack {
 
             if (dealer > 21) {
                 System.out.println("Dealer busted!");
-                money += bet * 2;
-                continue;
+                dealerHand.setBusted(true);
+                if (numHands <= 1) {
+                    money += bet * (numHands * 2);
+                    continue;
+                }
+
             }
 
-            if (dealer == player) {
-                System.out.println("\nPush");
-                money += bet;
-            } else if (dealer > player) {
-                System.out.println("\nDealer wins :(");
-            } else {
-                System.out.println("\nPlayer wins $" + bet);
-                money += bet * 2;
+            while (!handStack.isEmpty()) {
+                Hand temp2 = handStack.pop();
+                int temp2Total = temp2.getHandTotal();
+
+                if (temp2.isBusted()) {
+                    continue;
+                } else if (dealerHand.isBusted()) {
+                    money += bet * 2;
+                    continue;
+                }
+
+                if (dealer == temp2Total) {
+                    System.out.println("\nPush");
+                    money += bet;
+                } else if (dealer > temp2Total) {
+                    System.out.println("\nDealer wins :(");
+                } else {
+                    System.out.println("\nPlayer wins $" + bet);
+                    money += bet * 2;
+                }
             }
 
         }
