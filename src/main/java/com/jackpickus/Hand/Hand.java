@@ -8,11 +8,16 @@ import com.jackpickus.Card.Card;
 public class Hand implements HandInterface{
     
     List<Card> hand;
+    private boolean isBusted;
+    private boolean hasOneAce;
+    private int handAceTotal;
 
     public Hand(Card card1, Card card2) {
         this.hand = new ArrayList<>();
         this.hand.add(card1);
         this.hand.add(card2);
+        isBusted = false;
+        hasOneAce = false;
     }
 
     @Override
@@ -38,13 +43,7 @@ public class Hand implements HandInterface{
 
     @Override
     public boolean hasOneAce() {
-        if (this.hand.get(0).getName().equals("Ace")) {
-            return true;
-        } else if (this.hand.get(1).getName().equals("Ace")) {
-            return true;
-        } else {
-            return false;
-        }
+        return hasOneAce;
     }
 
     @Override
@@ -59,7 +58,35 @@ public class Hand implements HandInterface{
 
     @Override
     public void addCard(Card card) {
+            if (card.getName().equals("Ace") && !this.hasOneAce) {
+                this.hasOneAce = true;
+                handAceTotal += this.getHandTotal() + 10;
+            }
         this.hand.add(card);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder s = new StringBuilder("Player hand: ");
+        for (Card c : this.hand) {
+            s.append(c.toString()).append(" ");
+
+        }
+        s.append("\n");
+        int handTotal = getHandTotal();
+        s.append("Total: ").append(handTotal);
+        return s.toString();
+    }
+
+    public boolean isBusted() {
+        return isBusted;
+    }
+
+    public void setBusted(boolean busted) {
+        isBusted = busted;
+    }
+
+    public int getHandAceTotal() {
+        return handAceTotal;
+    }
 }
