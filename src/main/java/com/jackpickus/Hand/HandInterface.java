@@ -3,6 +3,8 @@ package com.jackpickus.Hand;
 import com.jackpickus.Card.Card;
 
 public interface HandInterface {
+
+    boolean isBusted = false;
     
     int getHandTotal();
 
