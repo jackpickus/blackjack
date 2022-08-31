@@ -67,11 +67,19 @@ public class Blackjack {
 
             dealer += dealerHand.getHandTotal();
 
-            System.out.println(playerHand.toString());
-            boolean dealerHasOneAce = dealerHand.hasOneAce();
+            boolean playerHasOneAce = playerHand.hasOneAce(playerCard1, playerCard2);
+            System.out.println("Player hand: " + playerCard1 + " " + playerCard2);
+            playerHand.setHandAceTotal(playerHand.getHandTotal());
+            if (playerHasOneAce && playerHand.getHandAceTotal() < 22) {
+                playerHand.setHandAceTotal(playerHand.getHandTotal() + 10);
+                System.out.println("Total: " + playerHand.getHandAceTotal() + "\n");
+            } else {
+                System.out.println("Total: " + playerHand.getHandTotal() + "\n");
+            }
+            boolean dealerHasOneAce = dealerHand.hasOneAce(dealerUpCard, dealerDownCard);
 
             int tempDealerAceTotal = dealer;
-            int tempPlayerAceTotal = 0;
+
 
 
             System.out.println("Dealer is showing: " + dealerUpCard + "\n");
@@ -122,6 +130,7 @@ public class Blackjack {
                 Hand temp = handQueue.remove();
                 System.out.println(temp.toString());
                 playerContinuesHand = false;
+                playerHasOneAce = temp.getHasOneAce();
 
                 System.out.print("> ");
                 decision = myScanner.nextLine();
@@ -131,9 +140,13 @@ public class Blackjack {
 
                     temp.addCard(nextCard);
 
+                    if (nextCard.getName().equals("Ace") && !playerHasOneAce) {
+                        playerHasOneAce = true;
+                        temp.setHasOneAce(true);
+                        temp.setHandAceTotal(temp.getHandTotal() + 10);
+                    }
 
-
-                    if (temp.hasOneAce() && temp.getHandAceTotal() < 22) {
+                    if (playerHasOneAce && temp.getHandAceTotal() < 22) {
                         System.out.println("Total: " + temp.getHandAceTotal() + "\n");
                     } else {
                         System.out.println("Total: " + temp.getHandTotal() + "\n");
@@ -147,7 +160,7 @@ public class Blackjack {
                     Card doubleDownCard = theDeck.dealCard();
                     temp.addCard(doubleDownCard);
 
-//                    if (playerHasOneAce) tempPlayerAceTotal += doubleDownCard.getValue();
+                    if (playerHasOneAce) temp.setHandAceTotal(doubleDownCard.getValue());
 
                     System.out.println("Card dealt is " + doubleDownCard);
 
@@ -182,7 +195,7 @@ public class Blackjack {
                     handStack.add(temp);
                 }
 
-                System.out.println("The hand total: " + temp.getHandTotal());
+//                System.out.println("The hand total: " + temp.getHandTotal());
                 playerBusted = temp.busted();
                 if (playerBusted) {
                     temp.setBusted(true);
@@ -190,13 +203,6 @@ public class Blackjack {
                 }
 
             }
-
-            // LOOK AT THIS FOR HOW MULTIPLE HANDS WILL HANDLE THIS
-//            if (playerHasOneAce) {
-//                if (tempPlayerAceTotal > player && tempPlayerAceTotal <= 21) {
-//                    player = tempPlayerAceTotal;
-//                }
-//            }
 
             if (playerBusted && numHands <= 1) {
                 continue;
@@ -265,6 +271,12 @@ public class Blackjack {
             while (!handStack.isEmpty()) {
                 Hand temp2 = handStack.pop();
                 int temp2Total = temp2.getHandTotal();
+
+                if (temp2.getHasOneAce()) {
+                    if (temp2.getHandAceTotal() > temp2.getHandTotal() && temp2.getHandAceTotal() <= 21) {
+                        temp2Total = temp2.getHandAceTotal();
+                    }
+                }
 
                 if (temp2.isBusted()) {
                     continue;
