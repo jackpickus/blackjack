@@ -42,8 +42,16 @@ public class Hand implements HandInterface{
     }
 
     @Override
-    public boolean hasOneAce() {
-        return hasOneAce;
+    public boolean hasOneAce(Card card1, Card card2) {
+        if (card1.getName().equals("Ace")) {
+            setHasOneAce(true);
+            return true;
+        } else if (card2.getName().equals("Ace")) {
+            setHasOneAce(true);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -58,10 +66,10 @@ public class Hand implements HandInterface{
 
     @Override
     public void addCard(Card card) {
-            if (card.getName().equals("Ace") && !this.hasOneAce) {
-                this.hasOneAce = true;
-                handAceTotal += this.getHandTotal() + 10;
-            }
+//            if (card.getName().equals("Ace") && !this.hasOneAce) {
+//                this.hasOneAce = true;
+//                setHandAceTotal(this.getHandTotal() + 10);
+//            }
         this.hand.add(card);
     }
 
@@ -73,7 +81,12 @@ public class Hand implements HandInterface{
 
         }
         s.append("\n");
-        int handTotal = getHandTotal();
+        int handTotal;
+        if (!hasOneAce){
+            handTotal = getHandTotal();
+        }else {
+            handTotal = this.getHandAceTotal();
+        }
         s.append("Total: ").append(handTotal);
         return s.toString();
     }
@@ -88,5 +101,17 @@ public class Hand implements HandInterface{
 
     public int getHandAceTotal() {
         return handAceTotal;
+    }
+
+    public void setHandAceTotal(int handAceTotal) {
+        this.handAceTotal = handAceTotal;
+    }
+
+    public boolean getHasOneAce() {
+        return hasOneAce;
+    }
+
+    public void setHasOneAce(boolean hasOneAce) {
+        this.hasOneAce = hasOneAce;
     }
 }
