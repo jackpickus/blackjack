@@ -12,7 +12,7 @@ public interface HandInterface {
 
     boolean hasBlackJack();
 
-    boolean hasOneAce();
+    boolean hasOneAce(Card card1, Card card2);
 
     boolean busted();
 
