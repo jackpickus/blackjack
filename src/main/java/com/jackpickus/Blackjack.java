@@ -309,6 +309,14 @@ public class Blackjack {
         myScanner.close();
     }
 
+    private boolean hasEnoughMoney(double money, int bet) {
+        if (money >= bet) {
+            return true;
+        }
+        System.out.println("Insufficient funds! You need " + bet + " to make that bet");
+        return false;
+    }
+
     private boolean isValidInput(String input, double money) {
         boolean isNumber = input != null && input.matches("\\d+");
 
