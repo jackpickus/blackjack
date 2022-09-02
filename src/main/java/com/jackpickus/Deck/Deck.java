@@ -25,8 +25,7 @@ public class Deck implements DeckInterface {
         Suit hearts = Suit.HEARTS;
         Suit spades = Suit.SPADES;
 
-        // make a 5 card shoe
-        int shoeSize = 5;
+        int shoeSize = 1;
         for (int j = 0; j < shoeSize; j++) {
             for (int i = 0; i < cardTypes.length; i++) {
                 Card c1, c2, c3, c4;
