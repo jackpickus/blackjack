@@ -208,7 +208,6 @@ public class Blackjack {
                 playerBusted = temp.busted();
                 if (playerBusted) {
                     temp.setBusted(true);
-                    break;
                 }
 
             }
