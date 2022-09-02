@@ -1,13 +1,11 @@
 package com.jackpickus;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-import java.util.Stack;
-
 import com.jackpickus.Card.Card;
 import com.jackpickus.Deck.Deck;
 import com.jackpickus.Hand.Hand;
+
+import java.util.Scanner;
+import java.util.Stack;
 
 public class Blackjack {
 
