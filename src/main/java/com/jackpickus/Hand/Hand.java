@@ -80,13 +80,22 @@ public class Hand implements HandInterface{
         }
         s.append("\n");
         int handTotal;
-        if (!hasOneAce){
-            handTotal = getHandTotal();
-        }else {
+        if (this.doesHandHaveAce() && this.getHandAceTotal() < 22) {
             handTotal = this.getHandAceTotal();
+        }else {
+            handTotal = getHandTotal();
         }
         s.append("Total: ").append(handTotal);
         return s.toString();
+    }
+
+    public boolean doesHandHaveAce() {
+        for (Card c : this.hand) {
+            if (c.getName().equals("Ace")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean isBusted() {
