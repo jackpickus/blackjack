@@ -106,24 +106,37 @@ public class Blackjack {
             }
 
             System.out.println("Enter 'h' to hit and 's' to stand");
-            System.out.println("Enter 'dd' to double down and 'spl' to split");
+            System.out.println("Enter 'dd' to double down and 'spl' to split\n");
 
-            Queue<Hand> handQueue = new LinkedList<>();
+            Stack<Hand> playingHandStack = new Stack<>();
             Stack<Hand> handStack = new Stack<>();
             int numHands = 1; // init to 1 because player will always have 1 hand
-            handQueue.add(playerHand);
+            playingHandStack.add(playerHand);
 
             String decision = "";
             boolean playerBusted = false;
             boolean playerContinuesHand;
-            while (!handQueue.isEmpty()) {
-                Hand temp = handQueue.remove();
-                System.out.println(temp.toString());
+            while (!playingHandStack.isEmpty()) {
+                Hand temp = playingHandStack.pop();
+
+                if (temp.isBusted()) continue;
+
+                if (temp.hasBlackJack()) {
+                    money += bet * 2.5;
+                    System.out.println("BLACKJACK! Win $" + bet * 1.5);
+                    continue;
+                }
+                System.out.println(temp);
                 playerContinuesHand = false;
                 playerHasOneAce = temp.getHasOneAce();
 
                 System.out.print("> ");
                 decision = myScanner.nextLine();
+
+                if (!hasEnoughMoney(money, bet) && (decision.equals("dd") || decision.equals("spl"))) {
+                    playingHandStack.add(temp);
+                    continue;
+                }
                 if (decision.equals("h")) {
                     Card nextCard = theDeck.dealCard();
                     System.out.println("Card dealt is " + nextCard);
