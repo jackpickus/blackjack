@@ -11,27 +11,27 @@ public class Hand implements HandInterface{
     private boolean isBusted;
     private boolean hasOneAce;
     private int handAceTotal;
+    private int handTotal;
 
     public Hand(Card card1, Card card2) {
         this.hand = new ArrayList<>();
         this.hand.add(card1);
         this.hand.add(card2);
+        handTotal = card1.getValue() + card2.getValue();
+        handAceTotal = handTotal + 10;
         isBusted = false;
         hasOneAce = false;
     }
 
-    @Override
     public int getHandTotal() {
-        int total = 0;
-        for (Card c : this.hand) {
-            total += c.getValue();
-        }
-        return total;
+        return handTotal;
     }
 
     @Override
     public void removeCard(int index) {
-        this.hand.remove(index);
+        Card c = this.hand.remove(index);
+        this.handTotal -= c.getValue();
+        this.handAceTotal -= c.getValue();
     }
 
     @Override
@@ -66,11 +66,9 @@ public class Hand implements HandInterface{
 
     @Override
     public void addCard(Card card) {
-//            if (card.getName().equals("Ace") && !this.hasOneAce) {
-//                this.hasOneAce = true;
-//                setHandAceTotal(this.getHandTotal() + 10);
-//            }
         this.hand.add(card);
+        this.handTotal += card.getValue();
+        this.handAceTotal += card.getValue();
     }
 
     @Override
