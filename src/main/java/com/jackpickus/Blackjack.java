@@ -280,7 +280,7 @@ public class Blackjack {
                 Hand temp2 = handStack.pop();
                 int temp2Total = temp2.getHandTotal();
 
-                if (temp2.getHasOneAce()) {
+                if (temp2.doesHandHaveAce()) {
                     if (temp2.getHandAceTotal() > temp2.getHandTotal() && temp2.getHandAceTotal() <= 21) {
                         temp2Total = temp2.getHandAceTotal();
                     }
