@@ -153,10 +153,11 @@ public class Blackjack {
                     } else {
                         System.out.println("Total: " + temp.getHandTotal() + "\n");
                     }
-                    handQueue.add(temp);
+                    playingHandStack.add(temp);
                     playerContinuesHand = true;
 
-                } else if (decision.equals("dd")) {
+                } else if (decision.equals("dd") && temp.numCards() == 2 && hasEnoughMoney(money, bet)) {
+
                     money -= bet;
                     bet += bet;
                     Card doubleDownCard = theDeck.dealCard();
@@ -166,7 +167,7 @@ public class Blackjack {
 
                     System.out.println("Card dealt is " + doubleDownCard);
 
-                } else if (decision.equals("spl") && playerCard1.getName().equals(playerCard2.getName())) {
+                } else if (decision.equals("spl") && temp.numCards() == 2 && temp.getCard(0).getName().equals(temp.getCard(1).getName()) && hasEnoughMoney(money, bet)) {
                     // player can only split if cards are the same rank ie Jack and Jack
                     System.out.println("SPLIT!");
                     numHands++; // player now has at least two hands
@@ -175,20 +176,26 @@ public class Blackjack {
 
                     money -= bet;
 
+                    Hand playerHand2 = new Hand(temp.getCard(1), newCard2);
+
                     temp.removeCard(1);
                     temp.addCard(newCard1);
 
-                    Hand playerHand2 = new Hand(playerCard2, newCard2);
-
-                    handQueue.add(temp);
-                    handQueue.add(playerHand2);
+                    playingHandStack.add(playerHand2);
+                    playingHandStack.add(temp);
 
                     int playerHandTotal2 = playerHand2.getHandTotal();
 
+                    if (temp.getHasOneAce()) {
+                        temp.setHasOneAce(true);
+                    }
+
+                    if (playerHand2.getHasOneAce()) {
+                        temp.setHasOneAce(true);
+                    }
+
                     System.out.println("Hand 1: " + temp);
-                    System.out.println("Hand 1 Total: " + temp.getHandTotal() + "\n");
                     System.out.println("Hand 2: " + playerHand2);
-                    System.out.println("Hand 2 Total: " + playerHandTotal2 + "\n");
 
                     playerContinuesHand = true;
 
