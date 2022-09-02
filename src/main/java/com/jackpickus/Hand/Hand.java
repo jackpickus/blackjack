@@ -121,4 +121,13 @@ public class Hand implements HandInterface{
     public void setHasOneAce(boolean hasOneAce) {
         this.hasOneAce = hasOneAce;
     }
+
+
+    public int numCards() {
+        return this.hand.size();
+    }
+
+    public Card getCard(int i) {
+        return this.hand.get(i);
+    }
 }
