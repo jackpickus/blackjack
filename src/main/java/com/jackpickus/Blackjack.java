@@ -146,7 +146,6 @@ public class Blackjack {
                     if (nextCard.getName().equals("Ace") && !playerHasOneAce) {
                         playerHasOneAce = true;
                         temp.setHasOneAce(true);
-                        temp.setHandAceTotal(temp.getHandTotal() + 10);
                     }
 
                     if (playerHasOneAce && temp.getHandAceTotal() < 22) {
